@@ -1,0 +1,11 @@
+# debug config
+botd.yml
+
+# python
+*.pyc
+__pycache__
+
+# vitualenv
+bin/
+include/
+lib/python3.5/
