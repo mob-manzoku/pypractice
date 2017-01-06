@@ -8,4 +8,5 @@ __pycache__
 # vitualenv
 bin/
 include/
-lib/python3.5/
+lib/python*/
+pyvenv.cfg

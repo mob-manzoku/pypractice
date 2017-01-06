@@ -1,12 +1,12 @@
 # PyPractice
 
-My practice code in Python
+My practice code in Python 3 !!
 
 # Development
 
 ```
 $ pyenv install
-$ virtualenv -p $(pyenv which python) .
+$ python -m venv .
 $ source bin/activate
 $ pip install -r requrements.txt
 ```
