@@ -1,5 +1,5 @@
-# debug config
-botd.yml
+# general
+*~
 
 # python
 *.pyc
