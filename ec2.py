@@ -11,10 +11,11 @@ def __main():
     name_tag_filters = []
     if args.name is not None:
         name_tag_filters = [
-            { 'Name': "tag:Name",
-              'Values': [
-                  args.name
-              ]
+            {
+                'Name': "tag:Name",
+                'Values': [
+                    args.name
+                ]
             }
         ]
 
@@ -35,17 +36,24 @@ def __main():
             }
             instances.append(i)
 
-    for i in sorted(instances, key=lambda x:x['LaunchTime']):
-        print(i['LaunchTime'], i['InstanceId'], i['TagName'])
+    commented_num = len(instances) - args.num
+    count = 0
+    for i in sorted(instances, key=lambda x: x['LaunchTime']):
+        if count < commented_num:
+            print("#", i['LaunchTime'], i['InstanceId'], i['TagName'])
+        else:
+            print(i['LaunchTime'], i['InstanceId'], i['TagName'])
+
+        count += 1
 
 
 def define_parsers():
     parser = argparse.ArgumentParser(description='EC2',
                                      add_help=False)
     parser.add_argument('--help', action='help', help='help')
-    parser.add_argument('-n', '--num', type=int, default="0",
+    parser.add_argument('-n', '--num', type=int, default="10000",
                         help='Ideal number')
-    parser.add_argument('--name',type=str,
+    parser.add_argument('--name', type=str,
                         help='tag name')
     return parser.parse_args()
 
