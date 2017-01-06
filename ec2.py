@@ -1,20 +1,22 @@
 #!/usr/bin/env python
+import argparse
 import botocore.session
 
-## TODO 引数にする
-NAMETAG="api-prod"
 
 def __main():
+    args = define_parsers()
     session = botocore.session.get_session()
     client = session.create_client('ec2', region_name='ap-northeast-1')
 
-    name_tag_filters = [
-        { 'Name': "tag:Name",
-          'Values': [
-              NAMETAG
-          ]
-        }
-    ]
+    name_tag_filters = []
+    if args.name is not None:
+        name_tag_filters = [
+            { 'Name': "tag:Name",
+              'Values': [
+                  args.name
+              ]
+            }
+        ]
 
     instances = []
 
@@ -35,6 +37,17 @@ def __main():
 
     for i in sorted(instances, key=lambda x:x['LaunchTime']):
         print(i['LaunchTime'], i['InstanceId'], i['TagName'])
+
+
+def define_parsers():
+    parser = argparse.ArgumentParser(description='EC2',
+                                     add_help=False)
+    parser.add_argument('--help', action='help', help='help')
+    parser.add_argument('-n', '--num', type=int, default="0",
+                        help='Ideal number')
+    parser.add_argument('--name',type=str,
+                        help='tag name')
+    return parser.parse_args()
 
 
 if __name__ == "__main__":
